@@ -8,9 +8,9 @@ async function bootstrap() {
 
   app.enableCors()
 
-  app.useStaticAssets('upload', {
-    prefix: '/imgupload'
-  })
+  // app.useStaticAssets('upload', {
+  //   prefix: '/imgupload'
+  // })
   const options = new DocumentBuilder()
     .setTitle('后端接口')
     .setDescription('The  API description')
@@ -18,8 +18,8 @@ async function bootstrap() {
     .build();
   const document = SwaggerModule.createDocument(app, options);
   SwaggerModule.setup('api-docs', app, document);
-
-  await app.listen(5000);
-  console.log('http://127.0.0.1:5000/api-docs')
+  const PORT = process.env.ADMIN_PORT || 5000
+  await app.listen(PORT);
+  console.log('http://127.0.0.1:${PORT}/api-docs')
 }
 bootstrap();

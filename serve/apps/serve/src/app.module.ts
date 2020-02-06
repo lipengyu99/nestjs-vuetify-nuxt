@@ -3,9 +3,10 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { DbModule } from '@libs/db';
 import { CoursesModule } from './courses/courses.module';
+import { CommonModule } from '@app/common';
 
 @Module({
-  imports: [DbModule, CoursesModule],
+  imports: [CommonModule, CoursesModule],
   controllers: [AppController],
   providers: [AppService],
 })

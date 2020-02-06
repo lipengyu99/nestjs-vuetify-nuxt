@@ -12,11 +12,17 @@ const models = TypegooseModule.forFeature([
 @Global()
 @Module({
   imports: [
-    TypegooseModule.forRoot('mongodb://127.0.0.1:27017/nestjs-vuetify-nuxt', {
-      useCreateIndex: true,
-      useFindAndModify: false,
-      useNewUrlParser: true
-    }), models
+    TypegooseModule.forRootAsync({
+     useFactory(){
+       return {
+        uri:process.env.DB,
+         useCreateIndex: true,
+         useFindAndModify: false,
+         useNewUrlParser: true
+       }
+     }
+    }),
+    models
   ],
   providers: [DbService],
   exports: [DbService, models],
