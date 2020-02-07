@@ -39,12 +39,12 @@
         </v-list>
         <v-list-item
           class="mt-4"
-          link
+          @click="isShowLoginForm = true"
         >
           <v-list-item-action>
-            <v-icon color="grey darken-1">mdi-plus-circle-outline</v-icon>
+            <v-icon color="grey darken-1">mdi-lock</v-icon>
           </v-list-item-action>
-          <v-list-item-title class="grey--text text--darken-1">添加频道</v-list-item-title>
+          <v-list-item-title class="grey--text text--darken-1">{{$store.state.auth.user.username}}</v-list-item-title>
         </v-list-item>
         <v-list-item link>
           <v-list-item-action>
@@ -58,7 +58,7 @@
     <v-app-bar
       app
       clipped-left
-      color="red"
+      color="indigo darken-2"
       dense
     >
       <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
@@ -83,10 +83,32 @@
     </v-app-bar>
 
     <v-content>
-      <!-- <v-container class="fill-height"> -->
         <nuxt :nuxt-child-key="$router.path"/>
-      <!-- </v-container> -->
     </v-content>
+    <v-dialog
+      
+      v-model="isShowLoginForm"
+      max-width="500px"
+     
+    >
+         <v-form class="pa-5 text-center" @submit.prevent="login">
+      <v-text-field
+      v-model="loginModel.username"
+        label="用户名"
+      ></v-text-field>
+      <v-text-field
+      v-model="loginModel.password"
+        label="密码"
+        type="password"
+      ></v-text-field>
+      <v-btn 
+      color="orange" type="submit">
+      登录
+      </v-btn>
+      <v-btn color="blue lighten-1" @click="isShowLoginForm=false">取消</v-btn>
+     </v-form>
+    </v-dialog>
+  
   </v-app>
 </template>
 
@@ -96,6 +118,8 @@
       source: String,
     },
     data: () => ({
+      isShowLoginForm:false,
+      loginModel:{},
       drawer: null,
       items: [
         { icon: 'home', text: '首页',link:'/' },
@@ -112,8 +136,27 @@
         { picture: 78, text: 'MKBHD' },
       ],
     }),
+    methods: {
+     async login(){
+        // 
+        this.$auth.loginWith('local',{
+          data:{
+            username:this.loginModel.username,
+            password:this.loginModel.password
+          }
+        })
+        console.log('login success!')
+        this.isShowLoginForm=false
+      }
+    },
     created () {
-      this.$vuetify.theme.dark = true
+      this.$vuetify.theme.dark = false,
+      this.$vuetify.theme.light = true
     },
   }
 </script>
+<style >
+.v-dialog--active{
+  background-color: rgba(255, 255, 255, 0.808) !important
+}
+</style>

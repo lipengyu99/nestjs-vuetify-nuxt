@@ -63,7 +63,8 @@ export default {
     '@nuxtjs/axios',
     // '@nuxtjs/pwa',
     // Doc: https://github.com/nuxt-community/dotenv-module
-    '@nuxtjs/dotenv'
+    '@nuxtjs/dotenv',
+    '@nuxtjs/auth'
   ],
   /*
    ** Axios module configuration
@@ -72,6 +73,31 @@ export default {
   axios: {
    proxy:true
   },
+  auth: {
+    strategies: {
+      local: {
+        endpoints: {
+          login: {
+            url: process.env.API_URL+'/auth/login',
+         
+            
+          },
+          logout: {
+            url: process.env.API_URL +'/auth/logout',
+            
+          },
+          user: {
+            url: process.env.API_URL +'/auth/user',
+            propertyName:false
+            
+          }
+        },
+        // tokenRequired: true,
+        // tokenType: 'bearer'
+      }
+    }
+  },
+
   /*
    ** vuetify module configuration
    ** https://github.com/nuxt-community/vuetify-module
@@ -79,12 +105,12 @@ export default {
   vuetify: {
     customVariables: ['~/assets/variables.scss'],
     theme: {
-      dark: true,
+      light: true,
       themes: {
-        dark: {
-          primary: colors.blue.darken2,
-          accent: colors.grey.darken3,
-          secondary: colors.amber.darken3,
+        light: {
+          primary: colors.blue.lighten2,
+          accent: colors.grey.lighten3,
+          secondary: colors.amber.lighten3,
           info: colors.teal.lighten1,
           warning: colors.amber.base,
           error: colors.deepOrange.accent4,
