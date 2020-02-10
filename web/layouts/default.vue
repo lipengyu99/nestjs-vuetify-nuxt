@@ -44,7 +44,7 @@
           <v-list-item-action>
             <v-icon color="grey darken-1">mdi-lock</v-icon>
           </v-list-item-action>
-          <v-list-item-title class="grey--text text--darken-1">{{$store.state.auth.user.username}}</v-list-item-title>
+          <v-list-item-title class="grey--text text--darken-1">登陆</v-list-item-title>
         </v-list-item>
         <v-list-item link>
           <v-list-item-action>
@@ -138,12 +138,15 @@
     }),
     methods: {
      async login(){
-        // 
+        
         this.$auth.loginWith('local',{
-          data:{
-            username:this.loginModel.username,
-            password:this.loginModel.password
-          }
+          // data:{
+          //   username:this.loginModel.username,
+          //   password:this.loginModel.password
+          // }
+          // {{$store.state.auth.user.username||登陆}}
+          data:this.loginModel
+        
         })
         console.log('login success!')
         this.isShowLoginForm=false
